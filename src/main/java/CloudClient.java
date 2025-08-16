@@ -60,7 +60,6 @@ public class CloudClient {
                 return null;
             }
         }
-
     }
 
     public String getMetadata(String href) throws IOException {
@@ -74,13 +73,20 @@ public class CloudClient {
 
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
-                return response.body().string();
+                String responseBody = response.body().string();
+                // Debug logging for metadata response
+                System.out.println("Metadata API call successful for: " + href);
+                return responseBody;
             } else {
                 System.err.println("Failed to retrieve metadata for VM " + href + " with code: " + response.code());
+                if (response.body() != null) {
+                    System.err.println("Error response: " + response.body().string());
+                }
                 return null;
             }
+        } catch (Exception e) {
+            System.err.println("Exception during metadata retrieval for " + href + ": " + e.getMessage());
+            return null;
         }
     }
-
-
 }

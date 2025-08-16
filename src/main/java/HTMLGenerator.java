@@ -6,13 +6,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class HTMLGenerator {
     public void generateHTML(List<VMInfo> vms, String directoryPath) {
+        // Pass directoryPath to Main for debug logging
+        Main.setDebugDirectory(directoryPath);
+
         StringBuilder html = new StringBuilder();
         html.append("<html><head>")
                 .append("<style>")
@@ -76,7 +78,6 @@ public class HTMLGenerator {
         html.append("</table></body></html>");
 
         String filePath = directoryPath + "\\VMReport.html";
-
 
         // Write HTML file
         try (FileWriter writer = new FileWriter(filePath)) {
